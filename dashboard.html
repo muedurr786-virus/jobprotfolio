@@ -1,0 +1,38 @@
+{% extends "base/base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="bg-blue-500 text-white p-6 rounded-lg shadow-md">
+            <h3 class="text-sm uppercase tracking-wide font-semibold opacity-75">Target BMR</h3>
+            <p class="text-3xl font-bold mt-2">{{ take_bmr }} <span class="text-sm">kcal</span></p>
+        </div>
+        <div class="bg-orange-500 text-white p-6 rounded-lg shadow-md">
+            <h3 class="text-sm uppercase tracking-wide font-semibold opacity-75">Consumed Today</h3>
+            <p class="text-3xl font-bold mt-2">{{ consume_calory }} <span class="text-sm">kcal</span></p>
+        </div>
+        <div class="bg-emerald-500 text-white p-6 rounded-lg shadow-md">
+            <h3 class="text-sm uppercase tracking-wide font-semibold opacity-75">Remaining Calories</h3>
+            <p class="text-3xl font-bold mt-2">{{ need_calory }} <span class="text-sm">kcal</span></p>
+        </div>
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+        <h2 class="text-xl font-bold text-gray-800 mb-4 border-b pb-2">Your Tracked Metrics</h2>
+        {% if data %}
+            <div class="grid grid-cols-2 gap-4 text-sm text-gray-600">
+                {% for profile in data %}
+                    <div><span class="font-semibold text-gray-800">Age:</span> {{ profile.age }} yrs</div>
+                    <div><span class="font-semibold text-gray-800">Weight:</span> {{ profile.weight }} kg</div>
+                    <div><span class="font-semibold text-gray-800">Height:</span> {{ profile.height }} cm</div>
+                    <div><span class="font-semibold text-gray-800">Gender:</span> {{ profile.get_gender_display }}</div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-gray-500 italic">No metrics recorded yet. <a href="{% url 'update_profile' %}" class="text-indigo-600 underline">Set up your profile metrics</a> to accurately compute your target BMR.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
